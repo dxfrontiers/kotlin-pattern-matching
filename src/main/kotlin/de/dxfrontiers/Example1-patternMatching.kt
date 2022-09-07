@@ -18,9 +18,9 @@ object Example1PatternMatching {
     fun send(url: String, eventContent: EventContent): SendResult =
         when (Try { post(url, eventContent) }) {
             is Success(_) ->
-              SendSuccessful
+                SendSuccessful
             is Failure(ex: HttpServerErrorException) if ex.statusCode == 500 ->
-              SendingFailed(mayResend = eventContent.allowResend)
+                SendingFailed(mayResend = eventContent.allowResend)
             is Failure(_: HttpClientErrorException) ->
                 // log 4xx error
                 SendingFailed(mayResend = false)
